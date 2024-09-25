@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Capacidade de Nobreak</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            margin-top: 5px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-left: 5px solid #28a745;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Capacidade de Nobreak</h1>
+        <form method="POST">
+            <label for="watts">Quantidade de Watts:</label>
+            <input type="number" id="watts" name="watts" step="any" placeholder="Digite o valor em watts" value="{{ valores['watts'] }}" required>
+
+            <label for="fator_potencia">Fator de Potência (0.6 a 1.0):</label>
+            <input type="number" id="fator_potencia" name="fator_potencia" step="any" min="0.6" max="1.0" placeholder="Ex: 0.7, 1.0" value="{{ valores['fator_potencia'] }}" required>
+
+            <label for="horas_autonomia">Horas de Autonomia:</label>
+            <input type="number" id="horas_autonomia" name="horas_autonomia" step="any" placeholder="Ex: 2 horas" value="{{ valores['horas_autonomia'] }}" required>
+
+            <label for="forma_onda">Forma de Onda:</label>
+            <select id="forma_onda" name="forma_onda" required>
+                <option value="Senoidal Pura" {% if valores['forma_onda'] == 'Senoidal Pura' %}selected{% endif %}>Senoidal Pura</option>
+                <option value="Senoidal Aproximada" {% if valores['forma_onda'] == 'Senoidal Aproximada' %}selected{% endif %}>Senoidal Aproximada</option>
+            </select>
+
+            <label for="fator_folga">Fator de Folga (%):</label>
+            <input type="number" id="fator_folga" name="fator_folga" step="any" placeholder="Ex: 20%" value="{{ valores['fator_folga'] }}" required>
+
+            <button type="submit">Calcular</button>
+        </form>
+
+        {% if resultado %}
+        <div class="result">
+            <h2>Resultado:</h2>
+            <p>{{ resultado }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
